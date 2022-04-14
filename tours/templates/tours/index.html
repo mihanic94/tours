@@ -1,0 +1,31 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+  <main class="container mt-3">
+    <!-- HERO -->
+    <section class="jumbotron text-center mt-4" style="background: url('https://oboitd.ru/images/goods/big/20200123094014_Oblaka_7-023.jpg'); background-position: center center">
+      <h1 class="display-4">{{ title }}</h1>
+      <p class="lead">{{ subtitle }}</p>
+      <p class="mt-5 w-50 mx-auto">{{ description }}</p>
+    </section>
+    <!-- CARDS -->
+    <div class="row mt-5">
+      {% for tour in tours %}
+        {% for key, value in tour.items %}
+      <div class="col-4">
+        <div class="card mb-4">
+          <div class="embed-responsive embed-responsive-16by9">
+             <img class="card-img-top embed-responsive-item" src="{{ value.picture }}" alt="" />
+          </div>
+          <div class="card-body">
+            <h2 class="h5 card-title">{{ value.title }}</h2>
+            <p class="card-text">{{ value.description }}</p>
+            <a href="{% url 'tour' key %}" class="btn btn-sm btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}
