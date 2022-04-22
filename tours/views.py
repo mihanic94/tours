@@ -16,40 +16,40 @@ def main_view(request):
         else:
             random_numbers.append(number)
 
-    tours_list = []
+    tours_dict = {}
     for number in random_numbers:
-        tours_list.append({number: tours[number]})
+        tours_dict[number] = tours[number]
 
     context = {
         'title': title,
         'subtitle': subtitle,
         'description': description,
-        'tours': tours_list,
+        'tours': tours_dict,
     }
 
     return render(request, 'tours/index.html', context=context)
 
 
-def departure_view(request, departure):
+def departure_view(request, departure_code):
     try:
-        dep = departures[departure]
+        departure = departures[departure_code]
     except KeyError:
         raise Http404
 
     prices = []
     nights = []
 
-    tours_list = []
-    for i in tours:
-        if departure == tours[i]["departure"]:
-            tours_list.append({i: tours[i]})
-            prices.append(tours[i]['price'])
-            nights.append(tours[i]['nights'])
+    tours_dict = {}
+    for tour_id in tours:
+        if departure_code == tours[tour_id]["departure"]:
+            tours_dict[tour_id] = tours[tour_id]
+            prices.append(tours[tour_id]['price'])
+            nights.append(tours[tour_id]['nights'])
 
     context = {
         'title': title,
-        'departure': dep,
-        'tours': tours_list,
+        'departure': departure,
+        'tours': tours_dict,
         'min_price': min(prices),
         'max_price': max(prices),
         'min_nights': min(nights),
